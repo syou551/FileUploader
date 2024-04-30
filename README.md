@@ -1,2 +1,9 @@
 # dirShareApp
-Samba share drive manage Web App
+自宅サーバーで動作するSamba共有ディレクトリをWebフロントから管理するApp
+
+# 概要
+* ファイル一覧の表示
+* ファイルの追加・削除
+  
+これらの機能を実装予定
+フロントをNext、バックをGoで
