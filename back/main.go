@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"os/exec"
 	"os"
+	"io"
     "fmt"
     "log"
 	"strings"
@@ -62,9 +63,51 @@ func IsDirectory(name string) (isDir bool, err error) {
 	return fInfo.IsDir(), nil
 }
 
+func saveFile(w http.ResponseWriter, r *http.Request){
+	filePath := "../"
+	//UPLQueryとして相対パスを受け渡し
+	//RootDirはSamba共有Dirの一番上
+	//limit := queryParams.Get("limit")でも可
+	queryParams := r.URL.Query()
+	path , _ := queryParams["path"]
+	fmt.Println(path[0])
+
+	if r.Method != "POST"{
+		http.Error(w,"This api is only POST request!", http.StatusMethodNotAllowed)
+		return
+	}
+
+	err := r.ParseMultipartForm(32 << 16)
+    if err != nil {
+        http.Error(w, err.Error(), http.StatusInternalServerError)
+        return
+    }
+	file, header, err := r.FormFile("file")
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+        return
+	}
+	defer file.Close()
+	//Pathの作成メゾット追加必要
+	f, err := os.Create(filePath+"/"+header.Filename)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+	defer f.Close()
+
+	_, err = io.Copy(f, file)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+	w.WriteHeader(http.StatusOK)	
+	fmt.Fprintf(w, "アップロード成功！")
+}
+
 func main() {
     http.HandleFunc("/api/ls", getLsRes)
-
+	http.HandleFunc("/upload", saveFile)
     // クロージャを渡しても良い
     // http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
     //  fmt.Fprintf(w, "Hello World")
