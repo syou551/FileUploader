@@ -7,6 +7,7 @@ dirShareAppのバックエンド
 # アクセス
 * `ls` : `/api/ls?path=<>`
 * UploadForm : `/upload?path=<>`
+* `view`: `/view?path=<>`
 ### パラメタ
 * Name: fileを指定　
 * path: 共有Dirからの相対パス 未指定なら共有Dir直下を対象に処理
@@ -15,3 +16,4 @@ dirShareAppのバックエンド
 # 進捗
 * `ls`とFormの処理まで実装
 * `/upload`で存在しないDirを入力された時のエラーハンドリングを追加する必要あり
+* `view`の実装完了

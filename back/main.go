@@ -1,11 +1,8 @@
 package main
 
 import (
-	//"database/sql"
-	//"encoding/json"
-    "log"
+	"log"
     "net/http"
-	//"github.com/gofiber/fiber/v2"
 )
 
 type Datas struct{
