@@ -7,7 +7,7 @@ dirShareAppのバックエンド
 # アクセス
 * `ls` : `/api/ls?path=<>`
 * `touch`: `/api/touch?path=<>&name={}`
-* `touch`: `/api/mkdir?path=<>&name={}`
+* `mkdir`: `/api/mkdir?path=<>&name={}`
 * UploadForm : `/upload?path=<>`
 * `view`: `/view?path=<>`
 ### パラメタ

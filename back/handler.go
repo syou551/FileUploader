@@ -14,7 +14,9 @@ import (
 )
 
 func getLsRes(w http.ResponseWriter, r *http.Request) {
-	w.Header().Set("Access-Control-Allow-Origin", "*")
+	w.Header().Set("Access-Control-Allow-Headers", "*")
+	w.Header().Set("Access-Control-Allow-Origin", "http://localhost:3000")
+	w.Header().Set("Access-Control-Allow-Methods", "GET, POST, OPTIONS")
 	dirPath := "../"
 	queryParams := r.URL.Query()
 	path, _ := queryParams["path"]
@@ -66,6 +68,9 @@ func IsDirectory(name string) (isDir bool, err error) {
 }
 
 func saveFile(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+	w.Header().Set("Access-Control-Allow-Methods", "GET, POST, PATCH, PUT, DELETE, OPTIONS")
+	w.Header().Set("Access-Control-Allow-Headers", "Origin, Content-Type, X-Auth-Token")
 	filePath := "../"
 	//UPLQueryとして相対パスを受け渡し
 	//RootDirはSamba共有Dirの一番上
@@ -81,7 +86,7 @@ func saveFile(w http.ResponseWriter, r *http.Request) {
 
 	err := r.ParseMultipartForm(32 << 16)
 	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
+		http.Error(w, "ParseError", http.StatusInternalServerError)
 		return
 	}
 	file, header, err := r.FormFile("file")
@@ -91,7 +96,7 @@ func saveFile(w http.ResponseWriter, r *http.Request) {
 	}
 	defer file.Close()
 	//Pathの作成メゾット追加必要
-	f, err := os.Create(filePath + "/" + path[0] + header.Filename)
+	f, err := os.Create(filePath + "/" + path[0] + "/" + header.Filename)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
@@ -108,6 +113,42 @@ func saveFile(w http.ResponseWriter, r *http.Request) {
 }
 
 func mkdir(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Access-Control-Allow-Headers", "*")
+	w.Header().Set("Access-Control-Allow-Origin", "http://localhost:3000")
+	w.Header().Set("Access-Control-Allow-Methods", "GET, POST, OPTIONS")
+	filePath := "../"
+	//UPLQueryとして相対パスを受け渡し
+	//RootDirはSamba共有Dirの一番上
+	//limit := queryParams.Get("limit")でも可
+	queryParams := r.URL.Query()
+	path, _ := queryParams["path"]
+	name, _ := queryParams["name"]
+	fmt.Println(path[0])
+	fmt.Println(name[0])
+
+	//Pathの作成メゾット追加必要
+	fileInfo, err := os.Lstat("../")
+
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	fileMode := fileInfo.Mode()
+	unixPerms := fileMode & os.ModePerm
+	err = os.MkdirAll(filePath+"/"+path[0]+"/"+name[0], unixPerms)
+
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+	w.WriteHeader(http.StatusOK)
+	fmt.Fprintf(w, "mkdir OK!")
+}
+
+func touch(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Access-Control-Allow-Headers", "*")
+	w.Header().Set("Access-Control-Allow-Origin", "http://localhost:3000")
+	w.Header().Set("Access-Control-Allow-Methods", "GET, POST, OPTIONS")
 	filePath := "../"
 	//UPLQueryとして相対パスを受け渡し
 	//RootDirはSamba共有Dirの一番上
@@ -126,10 +167,13 @@ func mkdir(w http.ResponseWriter, r *http.Request) {
 	}
 	defer f.Close()
 	w.WriteHeader(http.StatusOK)
-	fmt.Fprintf(w, "mkdir OK!")
+	fmt.Fprintf(w, "touch OK!")
 }
 
 func getFiles(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Access-Control-Allow-Headers", "*")
+	w.Header().Set("Access-Control-Allow-Origin", "http://localhost:3000")
+	w.Header().Set("Access-Control-Allow-Methods", "GET, POST, OPTIONS")
 	if r.Method != "GET" {
 		http.Error(w, "This api is only GET request!", http.StatusMethodNotAllowed)
 		return
