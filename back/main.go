@@ -11,8 +11,10 @@ type Datas struct {
 }
 
 func main() {
+
 	http.HandleFunc("/api/ls", getLsRes)
 	http.HandleFunc("/api/mkdir", mkdir)
+	http.HandleFunc("/api/touch", touch)
 	http.HandleFunc("/upload", saveFile)
 	http.HandleFunc("/view", getFiles)
 	// クロージャを渡しても良い
