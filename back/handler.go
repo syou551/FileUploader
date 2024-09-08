@@ -170,6 +170,29 @@ func touch(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w, "touch OK!")
 }
 
+func rm(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Access-Control-Allow-Headers", "*")
+	w.Header().Set("Access-Control-Allow-Origin", "http://localhost:3000")
+	w.Header().Set("Access-Control-Allow-Methods", "GET, POST, OPTIONS")
+	filePath := "../"
+	//UPLQueryとして相対パスを受け渡し
+	//RootDirはSamba共有Dirの一番上
+	//limit := queryParams.Get("limit")でも可
+	queryParams := r.URL.Query()
+	path, _ := queryParams["path"]
+	name, _ := queryParams["name"]
+	fmt.Println(path[0])
+	fmt.Println(name[0])
+
+	err := os.Remove(filePath + "/" + path[0] + "/" + name[0])
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+	w.WriteHeader(http.StatusOK)
+	fmt.Fprintf(w, "rm OK!")
+}
+
 func getFiles(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Access-Control-Allow-Headers", "*")
 	w.Header().Set("Access-Control-Allow-Origin", "http://localhost:3000")
