@@ -12,7 +12,7 @@ const Header = ({query, url}:{query? : string, url? : string})=>{
     const [uploadWinIsOpen, setUploadWinIsOpen] = useState<boolean>(false);
     
     return(
-        <div className="flex justify-between py-2 w-full bg-blue-100">
+        <header className="flex justify-between py-2 w-full bg-blue-100">
             <button className={clsx("flex rounded-md mx-2 py-2 px-2",{
                 "hover:bg-blue-300": query != "",
                 "bg-gray-300 text-gray-100":query == ""
@@ -50,7 +50,7 @@ const Header = ({query, url}:{query? : string, url? : string})=>{
                     <p>追加</p>
                 </button>
             </div>
-        </div>
+        </header>
     );
 };
 

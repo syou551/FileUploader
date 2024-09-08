@@ -13,8 +13,8 @@ const DirDialog = ({isOpen,onCancel,onOk,url,query}:{isOpen: boolean, onCancel: 
     return isOpen? (
     <>
     <div className="bg-white  top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 p-5 flex flex-col items-start absolute z-20">
-        <p className="text-xl font-bold py-2">ファイル作成</p>
-        <p className="text-lg py-2">ファイル名を入力してください</p>
+        <p className="text-xl font-bold py-2">フォルダ作成</p>
+        <p className="text-lg py-2">フォルダ名を入力してください</p>
         <div className="flex items-center justify-center mt-auto w-full">
             <div className="flex justify-center items-center py-2">
                 <input type="text" name="text" className="border rounded-md text-mdborder-black-200 py-2 px-2"
