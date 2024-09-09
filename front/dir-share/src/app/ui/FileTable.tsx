@@ -1,6 +1,9 @@
+'use Client';
+
 import {memo, useState} from "react";
 import {clsx} from 'clsx';
 import FileCard from "./FileCard";
+import { useSession } from 'next-auth/react';
 
 export type FileType = {
     Name : string,
@@ -10,6 +13,7 @@ export type FileType = {
 const FileTable = ({files, query}:{ files? : FileType[], query? : string}) =>{
     console.log(files);
     const [menuShown, setMenuShown] = useState<boolean>(false);
+    const {data:session} = useSession();
      
     return (
     <>

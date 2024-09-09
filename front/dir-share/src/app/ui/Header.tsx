@@ -5,13 +5,16 @@ import {clsx} from 'clsx';
 import FileDialog from './CreateFileDialog';
 import DirDialog from "./MkdirDialog";
 import UploadDialog from "./UploadDialog";
+import { signOut, useSession } from 'next-auth/react'
 
 const Header = ({query, url}:{query? : string, url? : string})=>{
     const [touchWinIsOpen, setTouchWinIsOpen] = useState<boolean>(false);
     const [mkdirWinIsOpen, setMkdirWinIsOpen] = useState<boolean>(false);
     const [uploadWinIsOpen, setUploadWinIsOpen] = useState<boolean>(false);
-    
-    return(
+
+    const {data: session} = useSession();
+
+    return (
         <header className="flex justify-between py-2 w-full bg-blue-100">
             <button className={clsx("flex rounded-md mx-2 py-2 px-2",{
                 "hover:bg-blue-300": query != "",
@@ -34,6 +37,8 @@ const Header = ({query, url}:{query? : string, url? : string})=>{
                     query={query}
                     url={url}/>
             <div className="flex ">
+                <button className={clsx("flex justify-center items-center flex rounded-md mx-2 py-2 px-2 hover:bg-blue-300",
+                    {'hidden': session == null})} onClick={()=>signOut()}>ログアウト</button>
                 <button className="flex justify-center items-center flex rounded-md mx-2 py-2 px-2 hover:bg-blue-300"
                         onClick={()=>setUploadWinIsOpen(true)}>
                     <span className="i-flat-color-icons-document"/>
