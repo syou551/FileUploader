@@ -22,14 +22,14 @@ export default function Page({searchParams} : {searchParams? : {path : string}})
     const url = process.env.NEXT_PUBLIC_BACK_URL;
     if(res == null || query != searchParams?.path){
         //デプロイ時に変更する
-        console.log(url+'/api/ls?path='+searchParams?.path);
+        console.log(url+'/dir/api/ls?path='+searchParams?.path);
         if(searchParams?.path.includes('/../')||
             searchParams?.path =='..'||
             searchParams?.path =='../')
         {
             location.replace('/explorer?path=');
         }
-        fetch(url+'/api/ls?path='+searchParams?.path).then((response)=>response.json())
+        fetch(url+'/dir/api/ls?path='+searchParams?.path).then((response)=>response.json())
         .then((data)=>{setRes(data as FileType[]);setQuery(searchParams?.path)});
     }
 
