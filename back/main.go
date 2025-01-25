@@ -16,8 +16,8 @@ func main() {
 	http.HandleFunc("/api/mkdir", mkdir)
 	http.HandleFunc("/api/touch", touch)
 	http.HandleFunc("/api/rm", rm)
-	http.HandleFunc("/upload", saveFile)
-	http.HandleFunc("/view", getFiles)
+	http.HandleFunc("/api/upload", saveFile)
+	http.HandleFunc("/api/view", getFiles)
 	// クロージャを渡しても良い
 	// http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 	//  fmt.Fprintf(w, "Hello World")

@@ -23,7 +23,7 @@ const FileDialog = ({isOpen,onCancel,onOk,url,query}:{isOpen: boolean, onCancel:
         </div>
         <button className="flex bg-slate-900 hover:bg-slate-700 text-white px-8 py-2 mx-auto"
                 onClick={() => {
-                    fetch(url+'/upload?path='+query+'&name='+name)
+                    fetch(url+'/api/upload?path='+query+'&name='+name)
                         .then((response)=>console.log(response));
                     onOk();
                     location.reload();
