@@ -6,7 +6,7 @@ const FileCard = ({info,query,key}:{info : FileType, query : string, key : numbe
     const [menuShown, isMenuShown] = useState<boolean>(false);
 
     const DeleteFile = () => {
-        const url = process.env.NEXT_PUBLIC_BACK_URL + "/api/rm?path=" + query + "&name=" + info.Name;
+        const url = process.env.NEXT_PUBLIC_BACK_URL + "/dir/api/rm?path=" + query + "&name=" + info.Name;
         fetch(url).then(()=>isMenuShown(false));
         location.reload();
     }
@@ -15,8 +15,8 @@ const FileCard = ({info,query,key}:{info : FileType, query : string, key : numbe
         <div className="flex mx-2 my-1 py-5 shadow-md hover:bg-gray-100" key={key} 
             onClick={()=>{
                 if(info.Type == "File") {
-                    const head_url = query == "" ? (process.env.NEXT_PUBLIC_BACK_URL + "/view?path=" + query) :
-                        (process.env.NEXT_PUBLIC_BACK_URL + "/view?path=" + query + "/"); 
+                    const head_url = query == "" ? (process.env.NEXT_PUBLIC_BACK_URL + "/dir/api/view?path=" + query) :
+                        (process.env.NEXT_PUBLIC_BACK_URL + "/dir/api/view?path=" + query + "/"); 
                     open(head_url+info.Name);
                 }
                 else {

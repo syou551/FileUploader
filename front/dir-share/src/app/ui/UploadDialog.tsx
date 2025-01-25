@@ -16,7 +16,7 @@ const UploadDialog = ({isOpen,onCancel,onOk,url,query}:{isOpen: boolean, onCance
             FormをfetchでPOSTする時はContentTypeは指定しない
             https://zenn.dev/kariya_mitsuru/articles/25c9aeb27059e7
         */}
-        const response = await fetch(url+'/upload?path=' + query, {
+        const response = await fetch(url+'/dir/api/upload?path=' + query, {
         method: 'POST',
         body: formData,
         })
