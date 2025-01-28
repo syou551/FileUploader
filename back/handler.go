@@ -17,7 +17,8 @@ func getLsRes(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Access-Control-Allow-Headers", "*")
 	w.Header().Set("Access-Control-Allow-Origin", "http://localhost:3000")
 	w.Header().Set("Access-Control-Allow-Methods", "GET, POST, OPTIONS")
-	dirPath := "../"
+
+	dirPath := os.Getenv("ROOTPATH")
 	queryParams := r.URL.Query()
 	path, _ := queryParams["path"]
 
@@ -71,7 +72,7 @@ func saveFile(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Access-Control-Allow-Origin", "*")
 	w.Header().Set("Access-Control-Allow-Methods", "GET, POST, PATCH, PUT, DELETE, OPTIONS")
 	w.Header().Set("Access-Control-Allow-Headers", "Origin, Content-Type, X-Auth-Token")
-	filePath := "../"
+	filePath := os.Getenv("ROOTPATH")
 	//UPLQueryとして相対パスを受け渡し
 	//RootDirはSamba共有Dirの一番上
 	//limit := queryParams.Get("limit")でも可
@@ -116,7 +117,7 @@ func mkdir(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Access-Control-Allow-Headers", "*")
 	w.Header().Set("Access-Control-Allow-Origin", "http://localhost:3000")
 	w.Header().Set("Access-Control-Allow-Methods", "GET, POST, OPTIONS")
-	filePath := "../"
+	filePath := os.Getenv("ROOTPATH")
 	//UPLQueryとして相対パスを受け渡し
 	//RootDirはSamba共有Dirの一番上
 	//limit := queryParams.Get("limit")でも可
@@ -149,7 +150,7 @@ func touch(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Access-Control-Allow-Headers", "*")
 	w.Header().Set("Access-Control-Allow-Origin", "http://localhost:3000")
 	w.Header().Set("Access-Control-Allow-Methods", "GET, POST, OPTIONS")
-	filePath := "../"
+	filePath := os.Getenv("ROOTPATH")
 	//UPLQueryとして相対パスを受け渡し
 	//RootDirはSamba共有Dirの一番上
 	//limit := queryParams.Get("limit")でも可
@@ -174,7 +175,7 @@ func rm(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Access-Control-Allow-Headers", "*")
 	w.Header().Set("Access-Control-Allow-Origin", "http://localhost:3000")
 	w.Header().Set("Access-Control-Allow-Methods", "GET, POST, OPTIONS")
-	filePath := "../"
+	filePath := os.Getenv("ROOTPATH")
 	//UPLQueryとして相対パスを受け渡し
 	//RootDirはSamba共有Dirの一番上
 	//limit := queryParams.Get("limit")でも可
@@ -204,7 +205,7 @@ func getFiles(w http.ResponseWriter, r *http.Request) {
 	queryParams := r.URL.Query()
 	path, _ := queryParams["path"]
 
-	dirPath := "../"
+	dirPath := os.Getenv("ROOTPATH")
 	f, err := os.Open(dirPath + path[0])
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusNotFound)
