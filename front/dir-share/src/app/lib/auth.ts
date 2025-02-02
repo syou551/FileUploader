@@ -65,13 +65,11 @@ export const authOptions : NextAuthOptions = {
     },*/
     callbacks: {
         async jwt({ token, user, account, profile, }) {
-            const { sub, roles } = decode(account?.access_token!)
-
             if (account) {
+              var scope = account.scope
               token.user = {
                 ...user,
-                sub,
-                roles
+                scope
               }
             }
             return token;
@@ -87,8 +85,7 @@ interface authSession{
     name?: string | null,
     email?: string | null,
     image?: string | null,
-    sub?: string |  null,
-    roles?: any | null
+    scope?: any | null
 }
 
 const decode = function (token : string) {
