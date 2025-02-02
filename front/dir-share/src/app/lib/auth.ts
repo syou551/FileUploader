@@ -65,17 +65,24 @@ export const authOptions : NextAuthOptions = {
     },*/
     callbacks: {
         async jwt({ token, user, account, profile }) {
+            var roles = null;
+            if (account?.access_token) {
+                let decodedToken = decode(account?.access_token);
+                if (decodedToken && typeof decodedToken !== "string") {
+                  roles = decodedToken?.client_roles;
+                }
+            }
+
             if (account) {
-              var roles = token.userRole;
               token.user = {
                 ...user,
-                roles
+                roles: roles
               }
             }
             return token;
         },
         async session({ session, token, user }) {
-            session.user = token.user as authSession;
+            session.user = user;
             return session;
         },
     },
