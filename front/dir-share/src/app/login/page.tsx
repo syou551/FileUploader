@@ -27,7 +27,7 @@ export default function Login() {
   ):
   <div>
     <p>{session?.user?.email}でログインしています</p>
-    <p>ロール{(session?.user as authSession).roles!}</p>
+    <p>ロール{((session?.user as authSession)?.roles == null) ? "なし" : (session?.user as authSession)?.roles}</p>
     <button className="flex bg-blue-100 rounded-md hover:bg-blue-200 py-2 px-2" onClick={()=>location.replace('/explorer?path=')}>ファイル一覧へ</button>
   </div>;
 }
