@@ -66,11 +66,9 @@ export const authOptions : NextAuthOptions = {
     callbacks: {
         async jwt({ token, user, account, profile }) {
             if (account) {
-              const { sub, roles } = decode(account.access_token!)
-      
+              var roles = token.userRole;
               token.user = {
                 ...user,
-                sub,
                 roles
               }
             }
@@ -87,7 +85,6 @@ interface authSession{
     name?: string | null,
     email?: string | null,
     image?: string | null,
-    sub?: any | null,
     roles?: any | null
 }
 
