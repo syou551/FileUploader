@@ -66,10 +66,8 @@ export const authOptions : NextAuthOptions = {
     callbacks: {
         async jwt({ token, user, account, profile, }) {
             if (account) {
-              var scope = account.scope
               token.user = {
-                ...user,
-                scope
+                ...user
               }
             }
             return token;
