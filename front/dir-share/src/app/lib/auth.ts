@@ -2,7 +2,6 @@ import NextAuth from 'next-auth/next'
 import type { NextAuthOptions, Account, Profile } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import KeycloakProvider from 'next-auth/providers/keycloak';
-import { decode } from 'next-auth/jwt';
 
 export const authOptions : NextAuthOptions = {
     
@@ -70,12 +69,11 @@ export const authOptions : NextAuthOptions = {
               token.user = {
                 ...user
               }
-              token.roles = profile;
             }
             return token;
         },
         async session({ session, token, user }) {
-            (session.user as authSession).profile = token.roles;
+            session.user = token.user as authSession;
             return session;
         },
     },
@@ -85,7 +83,7 @@ interface authSession{
     name?: string | null,
     email?: string | null,
     image?: string | null,
-    profile?: any | null
+    roles?: any | null
 }
 
 export const { handlers, auth, signIn, signOut } = NextAuth(authOptions);
