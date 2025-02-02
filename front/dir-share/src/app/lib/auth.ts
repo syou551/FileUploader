@@ -1,8 +1,10 @@
 import NextAuth from 'next-auth/next'
 import type { NextAuthOptions, Account, Profile } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
+import KeycloakProvider from 'next-auth/providers/keycloak';
 
 export const authOptions : NextAuthOptions = {
+    /*
     providers : [
         //add provider of support account type
         GoogleProvider({
@@ -52,7 +54,20 @@ export const authOptions : NextAuthOptions = {
                 }
             };
         }
-    },
+    },*/
+    providers: [
+        KeycloakProvider({
+          clientId: process.env.NEXT_PUBLIC_KEYCLOAK_ID as string,
+          clientSecret: process.env.NEXT_PUBLIC_KEYCLOAK_SECRET as string,
+          issuer: process.env.NEXT_PUBLIC_KEYCLOAK_ISSUER,
+        }),
+      ],
+      callbacks: {
+        async jwt({ token }) {
+          token.userRole = "admin"
+          return token
+        },
+      },
 }
 
 export const { handlers, auth, signIn, signOut } = NextAuth(authOptions);
