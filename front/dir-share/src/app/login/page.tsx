@@ -8,7 +8,7 @@ export default function Login() {
 
   return !session ?(
     <>
-    <button className="flex justify-center px-2 py-1 bg-blue-100 hover:bg-blue-400" onClick={() => signIn("google",{callbackUrl:"/login"})}> 
+    <button className="flex justify-center px-2 py-1 bg-blue-100 hover:bg-blue-400" onClick={() => signIn("keycloak",{callbackUrl:"/login"})}> 
       Login With Google
     </button>
     </>
