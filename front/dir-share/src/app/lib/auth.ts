@@ -64,11 +64,35 @@ export const authOptions : NextAuthOptions = {
         }
     },*/
     callbacks: {
-        async jwt({ token }) {
-          token.userRole = "admin"
-          return token
+        async jwt({ token, user, account, profile }) {
+            if (account) {
+              const { sub, roles } = decode(account.access_token!)
+      
+              token.user = {
+                ...user,
+                sub,
+                roles
+              }
+            }
+            return token;
+        },
+        async session({ session, token, user }) {
+            session.user = token.user as authSession;
+            return session;
         },
     },
+}
+
+interface authSession{
+    name?: string | null,
+    email?: string | null,
+    image?: string | null,
+    sub?: any | null,
+    roles?: any | null
+}
+
+const decode = function (token : string) {
+    return JSON.parse(Buffer.from(token.split('.')[1], 'base64').toString())
 }
 
 export const { handlers, auth, signIn, signOut } = NextAuth(authOptions);
