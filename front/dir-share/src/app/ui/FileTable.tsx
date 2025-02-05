@@ -13,7 +13,7 @@ export type FileType = {
 const FileTable = ({files, query}:{ files? : FileType[], query? : string}) =>{
     console.log(files);
     const [menuShown, setMenuShown] = useState<boolean>(false);
-    const {data:session} = useSession();
+    //const {data:session} = useSession();
      
     return (
     <>

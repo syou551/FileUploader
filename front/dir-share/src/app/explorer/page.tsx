@@ -16,7 +16,7 @@ type FileType = {
 export default function Page({searchParams} : {searchParams? : {path : string}}){
     const [query, setQuery] = useState<string>();
     const [res, setRes] = useState<FileType[]>();
-    const {status:status, data:session} = useSession();
+    //const {status:status, data:session} = useSession();
     const router = useRouter();
 
     const url = process.env.NEXT_PUBLIC_BACK_URL;
@@ -37,7 +37,7 @@ export default function Page({searchParams} : {searchParams? : {path : string}})
     <>
         <Header query={query} url={url}/>
         <FileTable files={res} query={query}/>
-        {session ? <></> : <>{router.push('/login')}</>}
+        {/*session ? <></> : <>{router.push('/login')}</>*/}
     </>
     ): <div>読み込み中</div>;
 }

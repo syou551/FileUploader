@@ -12,7 +12,7 @@ const Header = ({query, url}:{query? : string, url? : string})=>{
     const [mkdirWinIsOpen, setMkdirWinIsOpen] = useState<boolean>(false);
     const [uploadWinIsOpen, setUploadWinIsOpen] = useState<boolean>(false);
 
-    const {data: session} = useSession();
+    //const {data: session} = useSession();
 
     return (
         <header className="flex justify-between py-2 w-full bg-blue-100">
@@ -37,8 +37,8 @@ const Header = ({query, url}:{query? : string, url? : string})=>{
                     query={query}
                     url={url}/>
             <div className="flex ">
-                <button className={clsx("flex justify-center items-center flex rounded-md mx-2 py-2 px-2 hover:bg-blue-300",
-                    {'hidden': session == null})} onClick={()=>signOut()}>ログアウト</button>
+                <button className="flex justify-center items-center flex rounded-md mx-2 py-2 px-2 hover:bg-blue-300" onClick={()=>
+                    location.replace(process.env.NEXT_PUBLIC_FRONT_URL + "/oauth2/sign_out?rd=" + process.env.NEXT_PUBLIC_BACK_LOGOUT_URL)}>ログアウト</button>
                 <button className="flex justify-center items-center flex rounded-md mx-2 py-2 px-2 hover:bg-blue-300"
                         onClick={()=>setUploadWinIsOpen(true)}>
                     <span className="i-flat-color-icons-document"/>
