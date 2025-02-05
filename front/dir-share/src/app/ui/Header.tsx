@@ -12,7 +12,6 @@ const Header = ({query, url}:{query? : string, url? : string})=>{
     const [mkdirWinIsOpen, setMkdirWinIsOpen] = useState<boolean>(false);
     const [uploadWinIsOpen, setUploadWinIsOpen] = useState<boolean>(false);
 
-    //const {data: session} = useSession();
 
     return (
         <header className="flex justify-between py-2 w-full bg-blue-100">
