@@ -3,8 +3,6 @@ package main
 import (
 	"log"
 	"net/http"
-
-	"github.com/joho/godotenv"
 )
 
 type Datas struct {
@@ -13,13 +11,6 @@ type Datas struct {
 }
 
 func main() {
-	err := godotenv.Load()
-	if err != nil {
-		log.Fatal("Error loading .env file")
-	}
-
-	godotenv.Load()
-
 	http.HandleFunc("/api/ls", getLsRes)
 	http.HandleFunc("/api/mkdir", mkdir)
 	http.HandleFunc("/api/touch", touch)
